@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<!--suppress HtmlUnknownTag -->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>UI Survey</title>
+        <%-
+        // noinspection JSUnresolvedVariable
+        htmlWebpackPlugin.tags.headTags
+        %>
+    </head>
+    <body>
+    <%
+        current = "";
+        uniq = (function() {
+            let counter = 0;
+            return function() {
+                const result = counter++;
+                return "id" + (result >>> 1);
+            }
+        })();
+    %>
+    <input type="checkbox" id="view-2"/>
+    <input type="checkbox" id="view-3"/>
+    <input type="checkbox" id="view-4"/>
+    <input type="checkbox" id="view-5"/>
+    <input type="checkbox" id="view-6"/>
+    <input type="checkbox" id="view-7"/>
+    <div>
+        <header>
+            <h1>UI Survey</h1>
+        </header>
+        <main>
+            <input type="radio" name="gallery" id="galley-1" checked/>
+            <input type="radio" name="gallery" id="galley-2"/>
+            <input type="radio" name="gallery" id="galley-3"/>
+            <input type="radio" name="gallery" id="galley-4"/>
+            <form>
+                <section id="carousel">
+                    <h2>What do you think of the UI on the
+                        &nbsp;<a target="_blank" href="https://en.wikipedia.org/wiki/Main_Page">
+                            Wikipedia
+                        </a>&nbsp;website?
+                    </h2>
+                    <div>
+                        <div id="scene-1">
+                            <a target="_blank" href="https://en.wikipedia.org/wiki/Main_Page"></a>
+                            <span>The Main Page</span>
+                            <label for="galley-4"></label>
+                            <label for="galley-2"></label>
+                        </div>
+                        <div id="scene-2">
+                            <a target="_blank" href="https://en.wikipedia.org/wiki/Talk:User_interface"></a>
+                            <span>A Talk Page</span>
+                            <label for="galley-1"></label>
+                            <label for="galley-3"></label>
+                        </div>
+                        <div id="scene-3">
+                            <a target="_blank" href="https://en.wikipedia.org/w/index.php?title=User_interface&action=edit"></a>
+                            <span>The old WikiText editor</span>
+                            <label for="galley-2"></label>
+                            <label for="galley-4"></label>
+                        </div>
+                        <div id="scene-4">
+                            <a target="_blank" href="https://en.wikipedia.org/w/index.php?title=User_interface&action=edit"></a>
+                            <span>The new visual editor</span>
+                            <label for="galley-3"></label>
+                            <label for="galley-1"></label>
+                        </div>
+                    </div>
+                    <label for="view-2">Begin</label>
+                </section>
+                <section>
+                    <h2>Personal Information</h2>
+                    <article class="short">
+                        <h3>Name</h3>
+                        <div>
+                            <input type="text" name="first_name" placeholder="Alex" size="30" id="<%=uniq()%>" required/>
+                            <label for="<%=uniq()%>">First Name</label>
+                        </div>
+                        <div>
+                            <input type="text" name="last_name" placeholder="Appleseed" size="30" id="<%=uniq()%>" required/>
+                            <label for="<%=uniq()%>">Last Name</label>
+                        </div>
+                    </article>
+                    <article class="radio">
+                        <h3>Gender</h3>
+                        <div>
+                            <input type="radio" name="gender" id="<%=uniq()%>" value="o"/>
+                            <label for="<%=uniq()%>">&#x2753;</label>
+                            <input type="radio" name="gender" id="<%=uniq()%>" value="f"/>
+                            <label for="<%=uniq()%>">♀️</label>
+                            <input type="radio" name="gender" id="<%=uniq()%>" value="m"/>
+                            <label for="<%=uniq()%>">♂️</label>
+                        </div>
+                    </article>
+                    <label for="view-3">Next</label>
+                </section>
+                <section>
+                    <h2>User Information</h2>
+                    <article>
+                        <label>
+                            <span>I am a(n)</span>
+                            <select name="userlevel">
+                                <option value="unregged">Unregistered user</option>
+                                <option value="new">New user</option>
+                                <option value="autoconf">Autoconfirmed user</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </label>
+                    </article>
+                    <article>
+                        <label>
+                            <span>I mainly read articles on</span>
+                            <select name="userlevel">
+                                <option value="" disabled selected>Choose One</option>
+                                <option value="culture">Culture</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="geography">Geography</option>
+                                <option value="history">History</option>
+                                <option value="people">People</option>
+                                <option value="politics">Politics</option>
+                                <option value="science">Science</option>
+                                <option value="sports">Sports</option>
+                                <option value="technology">Technology</option>
+                            </select>
+                        </label>
+                    </article>
+                    <label for="view-4">Next</label>
+                </section>
+                <section>
+                    <h2>UI Interaction</h2>
+                    <article>
+                        <label>
+                            <span>Which part of the UI do you feel is the best?</span>
+                            <select name="like">
+                                <option value="" disabled selected>Choose One</option>
+                                <option value="nav">Navigation</option>
+                                <option value="colours">Colour Scheme</option>
+                                <option value="text">Article Content</option>
+                                <option value="editor">Editor</option>
+                            </select>
+                        </label>
+                    </article>
+                    <article>
+                        <label>
+                            <span>Which part of the UI do you feel is the worst?</span>
+                            <select name="hate">
+                                <option value="" disabled selected>Choose One</option>
+                                <option value="nav">Navigation</option>
+                                <option value="colours">Colour Scheme</option>
+                                <option value="text">Article Content</option>
+                                <option value="editor">Editor</option>
+                            </select>
+                        </label>
+                    </article>
+                    <article class="checklist">
+                        <h3>I was able to successfully:</h3>
+                        <div>
+                            <input type="checkbox" name="success1" id="<%=uniq()%>" value="success1"/>
+                            <label for="<%=uniq()%>">View the articles I want️</label>
+                            <input type="checkbox" name="success2" id="<%=uniq()%>" value="success2"/>
+                            <label for="<%=uniq()%>">Participate in discussion</label>
+                            <input type="checkbox" name="success3" id="<%=uniq()%>" value="success3"/>
+                            <label for="<%=uniq()%>">Edit articles with the old Wikitext editor</label>
+                            <input type="checkbox" name="success4" id="<%=uniq()%>" value="success4"/>
+                            <label for="<%=uniq()%>">Edit articles with the new visual editor</label>
+                        </div>
+                    </article>
+                    <article class="checklist">
+                        <h3>I was able to use the website:</h3>
+                        <div>
+                            <input type="checkbox" name="feature1" id="<%=uniq()%>" value="feature1"/>
+                            <label for="<%=uniq()%>">With a Screen Reader</label>
+                            <input type="checkbox" name="feature2" id="<%=uniq()%>" value="feature2"/>
+                            <label for="<%=uniq()%>">Only knowing Canadian English</label>
+                            <input type="checkbox" name="feature3" id="<%=uniq()%>" value="feature3"/>
+                            <label for="<%=uniq()%>">On Desktop</label>
+                            <input type="checkbox" name="feature4" id="<%=uniq()%>" value="feature4"/>
+                            <label for="<%=uniq()%>">On Mobile</label>
+                            <input type="checkbox" name="feature5" id="<%=uniq()%>" value="feature5"/>
+                            <label for="<%=uniq()%>">Without a Mouse</label>
+                        </div>
+                    </article>
+                    <label for="view-5">Next</label>
+                </section>
+                <section>
+                    <h2>Long Answer</h2>
+                    <article>
+                        <label>
+                            <h3>What do you think of the main page?</h3>
+                            <textarea rows="20" cols="30" required></textarea>
+                        </label>
+                    </article>
+                    <article>
+                        <label>
+                            <h3>What do you think of the talk page?</h3>
+                            <textarea rows="20" cols="30" required></textarea>
+                        </label>
+                    </article>
+                    <article>
+                        <label>
+                            <h3>How is the old Wikitext editor?</h3>
+                            <textarea rows="20" cols="30" required></textarea>
+                        </label>
+                    </article>
+                    <article>
+                        <label>
+                            <h3>How is the new visual editor?</h3>
+                            <textarea rows="20" cols="30" required></textarea>
+                        </label>
+                    </article>
+                    <article>
+                        <label>
+                            <h3>Any other thoughts?</h3>
+                            <textarea rows="20" cols="30" required></textarea>
+                        </label>
+                    </article>
+                    <label for="view-6">Next</label>
+                </section>
+                <section class="ratings">
+                    <h2>How would you rate the following compared to other websites?</h2>
+                    <article class="radio">
+                        <h3>Feature Completeness</h3>
+                        <% current = "functionality" %>
+                        <% include ratings.ejs %>
+                        <h3>Consistency</h3>
+                        <% current = "consistency" %>
+                        <% include ratings.ejs %>
+                        <h3>Ease of use</h3>
+                        <% current = "efficiency" %>
+                        <% include ratings.ejs %>
+                        <h3>Intuitiveness</h3>
+                        <% current = "usability" %>
+                        <% include ratings.ejs %>
+                        <h3>Reliability</h3>
+                        <% current = "reliability" %>
+                        <% include ratings.ejs %>
+                        <h3>Security</h3>
+                        <% current = "security" %>
+                        <% include ratings.ejs %>
+                        <h3>Overall Website</h3>
+                        <% current = "overall" %>
+                        <% include ratings.ejs %>
+                        <% current = "" %>
+                    </article>
+                    <label for="view-7">Submit</label>
+                </section>
+                <section>
+                    <h3>Thank you for submitting the survey!</h3>
+                </section>
+            </form>
+        </main>
+        <footer>
+            Website designed by Daniel Tang (0300068985)
+            <br/>
+            University of Ottawa SEG3125 Lab 1
+            <br/>
+            <br/>
+            <aside>
+                There is surprisingly no JavaScript at all
+                <br/>
+                Handed in on Tuesday, 27th of May, 2020
+                <span id="resp-mobile-text"><br/>This page works on &#x1f4f1; too</span>
+                <span id="resp-desktop-text"><br/>This page works on &#x1f5a5; too</span>
+            </aside>
+        </footer>
+    </div>
+    <%-
+    // noinspection JSUnresolvedVariable,NodeModulesDependencies
+    htmlWebpackPlugin.options.enableHotReload ?
+            htmlWebpackPlugin.tags.bodyTags : ""
+    %>
+    </body>
+</html>

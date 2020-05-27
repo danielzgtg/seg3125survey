@@ -1,0 +1,499 @@
+$responsive-width: 1500px;
+
+@font-face {
+    font-family: "Noto Sans";
+    src: url("./NotoSans-Regular.ttf") format("ttf");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Noto Sans";
+    src: url("./NotoSans-Bold.ttf") format("ttf");
+    font-style: normal;
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Noto Color Emoji";
+    src: url("./NotoColorEmoji.ttf") format("ttf");
+}
+
+//noinspection CssNoGenericFontName
+h1, h2, h3, footer, label, span {
+    font-family: "Noto Sans", "Noto Color Emoji";
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+label {
+    touch-action: manipulation;
+}
+
+%no-margin {
+    margin: 0;
+}
+
+html, body, section, h1 {
+    @extend %no-margin;
+}
+
+$box-padding: 20px;
+
+h2, h3 {
+    @extend %no-margin;
+    padding: 10px;
+}
+
+article.short > div {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 10px;
+    background: whitesmoke;
+    border-radius: 10px 10px 0 0;
+
+    & > input {
+        outline: none;
+        border: none;
+        border-bottom: 3px solid grey;
+        background: none;
+        font-size: 15pt;
+        padding: 5px 10px;
+        transition: border-bottom-color 0.3s;
+        width: #{"min(600px, 100vw)"};
+
+        &::placeholder {
+            transition: opacity .3s;
+        }
+
+        & + label {
+            font-size: 10pt;
+            padding: 5px 0 0 10px;
+            transition: transform .3s, color .3s;
+            transform-origin: bottom left;
+            pointer-events: none;
+        }
+
+        &:invalid:not(:focus) {
+            & + label {
+                transform: translateY(calc(2.125em - 1px)) scale(1.5);
+            }
+
+            &::placeholder {
+                opacity: 0;
+            }
+        }
+
+        &:focus {
+            border-bottom-color: darkmagenta;
+
+            & + label {
+                color: darkmagenta;
+            }
+        }
+    }
+}
+
+$border: 1px solid white;
+
+article {
+    display: inline-block;
+    text-align: left;
+}
+
+body {
+    background: darkgrey url(
+    "md-mahdi-oo0oX_3oznI-unsplash.jpg"
+    ) center / cover fixed;
+}
+
+form > section {
+    border: $border;
+    border-width: 0 1px 1px 1px;
+    padding: $box-padding;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    $colours:
+            whitesmoke,
+            lightgreen,
+            deepskyblue,
+            orange,
+            lightpink,
+            greenyellow,
+            yellow;
+
+    @for $i from 1 through length($colours) {
+        $colour: nth($colours, $i);
+
+        &:nth-child(#{$i}) {
+            background: $colour;
+        }
+    }
+}
+
+@for $i from 2 through 7 {
+    #view-#{$i} {
+        &:not(:checked) ~ div > main > form > section:nth-of-type(#{$i}) {
+            display: none;
+        }
+
+        &:checked ~ div > main > form > section > label[for="view-#{$i}"] {
+            display: none;
+        }
+    }
+}
+
+@keyframes bounce {
+    from {
+        transform: scale(1);
+    }
+    33% {
+        transform: scale(.8);
+    }
+    66% {
+        transform: scale(1.2);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+#view-7:checked ~ div {
+    animation: bounce 1s;
+
+    & > main > form > section:not(:last-child) {
+        display: none;
+    }
+}
+
+%toggle-switches {
+    margin: 0 3px;
+
+    @media (min-width: 450px) {
+        margin: 0 6px;
+    }
+}
+
+article:not(.radio) > label {
+    @extend %toggle-switches;
+    display: block;
+
+    & > span {
+        font-weight: bold;
+
+        &::after {
+            content: ': ';
+        }
+    }
+}
+
+input[type="radio"] {
+    background: red;
+}
+
+$border-radius: 20px;
+
+article.radio > div {
+    display: flex;
+    flex-direction: row-reverse;
+
+    & > label {
+        @extend %toggle-switches;
+
+        display: inline-flex;
+        flex-direction: row-reverse;
+        background: whitesmoke;
+        width: 64px;
+        height: 64px;
+        font-size: 32px;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid transparent;
+        transition: background-color 0.3s, border-color .3s;
+    }
+
+    & > input {
+        &:checked, &:active {
+            & + label {
+                border-color: grey;
+            }
+        }
+    }
+
+    & > input:hover, &:not(:hover) > input:checked {
+        & + label {
+            background: gold;
+        }
+    }
+
+    & > input[type="radio"] {
+        display: none;
+    }
+}
+
+
+section.ratings > article.radio > div {
+    & > input:hover, &:not(:hover) > input:checked {
+        & ~ label {
+            background: gold;
+        }
+    }
+}
+
+header, footer {
+    padding: $box-padding;
+    border: $border;
+}
+
+header {
+    background: aqua;
+
+    @media (min-width: $responsive-width) {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+    }
+}
+
+footer {
+    background: lightgray;
+    color: black;
+
+    @media (min-width: $responsive-width) {
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+    }
+}
+
+textarea {
+    border-radius: 10px;
+    padding: 10px;
+    width: #{"min(600px, 100vw)"};
+
+    &:focus {
+        outline: 3px solid darkmagenta;
+    }
+}
+
+$box-shadow: 0 14px 28px rgba(#000,.25), 0 10px 10px rgba(#000,.22);
+
+article.checklist > div {
+    & > input[type="checkbox"] {
+        display: none;
+
+        & + label {
+            background: whitesmoke;
+            font-size: 15pt;
+            display: block;
+            border: 1px solid grey;
+            padding: 10px;
+            position: relative;
+            transition: background-color .3s, transform .3s;
+
+            &:hover {
+                transform: scale(1.1);
+                z-index: 1;
+            }
+
+            &:first-of-type {
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+
+            &:last-of-type {
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
+
+            &::before {
+                content: "✖️";
+                margin-right: 10px;
+            }
+        }
+
+        &:checked + label {
+            background: palegreen;
+
+            &::before {
+                content: "✔️";
+            }
+        }
+    }
+}
+
+h2 {
+    text-decoration: underline;
+}
+
+@keyframes splash {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body > div {
+    text-align: center;
+    margin: 0 auto;
+    max-width: $responsive-width;
+    overflow: hidden;
+    animation: splash 1s;
+
+    @media (min-width: $responsive-width) {
+        margin: 50px auto;
+        box-shadow: $box-shadow;
+        border-radius: $border-radius;
+    }
+}
+
+@keyframes flyIn {
+    from {
+        filter: blur(4px);
+        transform: scale(.9);
+    }
+}
+
+aside {
+    color: grey;
+}
+
+form > section {
+    &:not(:first-child) {
+        transform-origin: center;
+        animation: flyIn .3s;
+    }
+
+    & > label {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 15pt;
+        background: rgba(#000, .2);
+        transition: transform .3s, box-shadow .3s, border-color .3s;
+        border: 1px solid black;
+
+        &:hover {
+            transform: scale(1.2);
+            box-shadow: $box-shadow;
+        }
+
+        &:active {
+            border-color: transparent;
+        }
+    }
+}
+
+#carousel > div {
+    width: 100vmin;
+    height: 76.4vmin;
+    position: relative;
+    transition: transform .3s,  box-shadow .3s;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    @media (min-width: 827px) {
+        width: 827px;
+        height: 632px;
+
+        &:hover {
+            transform: scale(1.2);
+            box-shadow: $box-shadow;
+        }
+    }
+}
+
+#carousel > div > div {
+    width: 100%;
+    height: 100%;
+
+    & > * {
+        position: absolute;
+        font-size: 30pt;
+    }
+
+    & > a {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    & > span {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 30px;
+        font-weight: bold;
+        color: lightpink;
+        background: rgba(#000, .5);
+    }
+
+    & > label {
+        top: 50%;
+        margin-top: calc(-15pt - 10px - 10px);
+        transition: color .3s;
+
+        &:hover {
+            color: lightpink;
+        }
+    }
+
+    & > span + label {
+        left: 0;
+
+        &::before {
+            padding: 10px;
+            content: "\00ab";
+        }
+    }
+
+    & > label + label {
+        right: 0;
+
+        &::after {
+            padding: 10px;
+            content: "\00bb";
+        }
+    }
+}
+
+main, body {
+    & > input {
+        display: none;
+    }
+}
+
+$scenes: url("./en.wikipedia.org_wiki_Main_Page.png"),
+    url("./en.wikipedia.org_wiki_Talk_User_interface.png"),
+    url("./editold.png"),
+    url("./editnew.png");
+
+
+@for $i from 1 through length($scenes) {
+    $scene: nth($scenes, $i);
+
+    #scene-#{$i} > a {
+        background: white $scene center / contain no-repeat;
+    }
+
+    #galley-#{$i}:not(:checked) ~ form > #carousel > div > #scene-#{$i} {
+        display: none;
+    }
+}
+
+@media (max-width: $responsive-width) {
+    #resp-mobile-text {
+        display: none;
+    }
+}
+
+@media (min-width: $responsive-width) {
+    #resp-desktop-text {
+        display: none;
+    }
+}
