@@ -1,9 +1,9 @@
 {
-  "main.css": "/styles/main.65e7cb1462b63801329d.css",
-  "main.js": "/main.d9db34c743974657003a.js",
-  "runtime.js": "/runtime.7d995403c5a16b6c93b7.js",
-  ".nojekyll": "/.nojekyll",
-  "fonts/style.scss": "/fonts/NotoSans-Regular.f70e54e4f779b7a2d3952cb882f01365.ttf",
-  "img/style.scss": "/img/md-mahdi-oo0oX_3oznI-unsplash.f02808c61885f9267757fd21999d2724.jpg",
-  "index.html": "/index.html"
+  "main.css": "/seg3125survey/styles/main.47aab6af78016273c673.css",
+  "main.js": "/seg3125survey/main.d9db34c743974657003a.js",
+  "runtime.js": "/seg3125survey/runtime.8d31005ab0590d403d41.js",
+  ".nojekyll": "/seg3125survey/.nojekyll",
+  "fonts/style.scss": "/seg3125survey/fonts/NotoSans-Regular.f70e54e4f779b7a2d3952cb882f01365.ttf",
+  "img/style.scss": "/seg3125survey/img/md-mahdi-oo0oX_3oznI-unsplash.f02808c61885f9267757fd21999d2724.jpg",
+  "index.html": "/seg3125survey/index.html"
 }
