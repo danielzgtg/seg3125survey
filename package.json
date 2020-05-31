@@ -5,9 +5,12 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "start": "webpack-dev-server --open",
-    "watch": "webpack --watch"
+    "build": "webpack --mode production",
+    "buildDev": "webpack --mode development",
+    "start": "webpack-dev-server --mode development --open",
+    "startProd": "webpack-dev-server --mode production --open",
+    "watchDev": "webpack --mode development --watch",
+    "watchProd": "webpack --mode production --watch"
   },
   "author": "Daniel Tang (0300068985)",
   "license": "UNLICENSED",
@@ -29,6 +32,7 @@
     "webpack-cli": "^3.3.11",
     "webpack-copy-plugin": "0.0.4",
     "webpack-dev-server": "^3.11.0",
-    "webpack-manifest-plugin": "^2.2.0"
+    "webpack-manifest-plugin": "^2.2.0",
+    "webpack-merge": "^4.2.2"
   }
 }

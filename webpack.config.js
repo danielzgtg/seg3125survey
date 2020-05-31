@@ -7,24 +7,16 @@ const WebpackManifestPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const merge = require('webpack-merge')
 
-const devMode = false;
-const publicPath = '/seg3125survey';
+const openPath = 'seg3125survey/';
+const publicPath = '/' + openPath;
+const distPath = path.resolve(__dirname, 'dist' + publicPath);
 // noinspection ES6ConvertVarToLetConst,JSUnusedLocalSymbols
 var query = {};
 
-module.exports = {
-    mode: devMode ? 'development': 'production',
-    entry: {
-        main: './src/index.js',
-    },
-    devServer: {
-        contentBase: './dist' + publicPath,
-    },
-    ...(devMode ? {
-        devtool: 'inline-source-map',
-    }: {}),
-    plugins: [
+function plugins(devMode) {
+    return [
         new webpack.ProgressPlugin(),
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false,
@@ -36,8 +28,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: '!!ejs-compiled-loader?{}!./src/index.ejs',
             inject: false,
-            // minify: !devMode,
-            minify: {
+            minify: !devMode && {
                 collapseWhitespace: true,
                 collapseInlineTagWhitespace: true,
                 decodeEntities: true,
@@ -57,7 +48,23 @@ module.exports = {
                 'static',
             ],
         }),
-    ],
+    ];
+}
+
+const base = {
+    entry: {
+        main: './src/index.js',
+    },
+    devServer: {
+        contentBase: distPath,
+        openPage: openPath,
+        overlay: {
+            warnings: true,
+            errors: true,
+        },
+        publicPath: publicPath,
+        serveIndex: false,
+    },
     module: {
         rules: [
             {
@@ -95,11 +102,10 @@ module.exports = {
     },
     output: {
         filename: '[name].[contentHash].js',
-        path: path.resolve(__dirname, 'dist' + publicPath),
-        publicPath: publicPath + '/',
+        path: distPath,
+        publicPath: publicPath,
     },
     optimization: {
-        minimize: !devMode,
         minimizer: [
             new TerserJSPlugin(),
             new OptimizeCSSAssetsPlugin(),
@@ -116,8 +122,37 @@ module.exports = {
                 },
             },
         },
-        removeAvailableModules: true,
-        removeEmptyChunks: !devMode,
         runtimeChunk: "single",
     },
 };
+
+const dev = {
+    devtool: 'inline-source-map',
+    optimization: {
+        minimize: false,
+        removeEmptyChunks: false,
+    },
+};
+
+const prod = {
+    optimization: {
+        minimize: true,
+    },
+};
+
+function isDevMode(mode) {
+    switch (mode) {
+        case "development":
+            return true;
+        case "production":
+            return false;
+    }
+    throw TypeError("Unknown mode");
+}
+
+module.exports = (env, argv) => {
+    const devMode = isDevMode(argv.mode);
+    return merge(base, devMode ? dev : prod, {
+        plugins: plugins(devMode),
+    });
+}
