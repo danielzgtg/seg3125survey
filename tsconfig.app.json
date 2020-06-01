@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es6",
+    "esModuleInterop": true,
+    "removeComments": true,
+    "noEmitOnError": true,
+    "importHelpers": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
+    "moduleResolution": "node",
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ]
+  }
+}

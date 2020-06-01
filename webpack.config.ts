@@ -1,13 +1,13 @@
-const path = require('path');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackManifestPlugin = require('webpack-manifest-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserJSPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const merge = require('webpack-merge')
+import path from "path";
+import webpack from 'webpack';
+import WebpackManifestPlugin from 'webpack-manifest-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyWebpackPlugin from "copy-webpack-plugin";
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TerserJSPlugin from 'terser-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import merge from 'webpack-merge';
 
 const openPath = 'seg3125survey/';
 const publicPath = '/' + openPath;
@@ -15,7 +15,7 @@ const distPath = path.resolve(__dirname, 'dist' + publicPath);
 // noinspection ES6ConvertVarToLetConst,JSUnusedLocalSymbols
 var query = {};
 
-function plugins(devMode) {
+function plugins(devMode: boolean): NonNullable<webpack.Configuration['plugins']> {
     return [
         new webpack.ProgressPlugin(),
         new CleanWebpackPlugin({
@@ -51,9 +51,10 @@ function plugins(devMode) {
     ];
 }
 
-const base = {
+const base: webpack.Configuration = {
     entry: {
-        main: './src/index.js',
+        polyfills: './src/polyfills.ts',
+        main: './src/index.ts',
     },
     devServer: {
         contentBase: distPath,
@@ -71,9 +72,24 @@ const base = {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        },
+                    },
                 ],
             },
             {
@@ -98,6 +114,30 @@ const base = {
                     },
                 ],
             },
+            {
+                test: /\.ts$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            babelrc: true,
+                        },
+                    },
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: 'tsconfig.app.json',
+                        },
+                    }
+                ],
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: [
+            '.js',
+            '.ts',
         ],
     },
     output: {
@@ -115,32 +155,35 @@ const base = {
         splitChunks: {
             chunks: 'all',
             cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
+                vendors: {
+                    test: /[\\/]node_modules[\\/](?!core-js|regenerator-runtime)/,
                     name: 'vendors',
                     chunks: 'all',
+                    enforce: true,
                 },
             },
         },
         runtimeChunk: "single",
+        usedExports: true,
+        sideEffects: true,
     },
 };
 
-const dev = {
-    devtool: 'inline-source-map',
+const dev: webpack.Configuration = {
+    devtool: 'source-map',
     optimization: {
         minimize: false,
         removeEmptyChunks: false,
     },
 };
 
-const prod = {
+const prod: webpack.Configuration = {
     optimization: {
         minimize: true,
     },
 };
 
-function isDevMode(mode) {
+function isDevMode(mode: string | undefined): boolean {
     switch (mode) {
         case "development":
             return true;
@@ -150,9 +193,10 @@ function isDevMode(mode) {
     throw TypeError("Unknown mode");
 }
 
-module.exports = (env, argv) => {
+// noinspection JSUnusedGlobalSymbols
+export default function (env: unknown, argv: { mode: string }): webpack.Configuration {
     const devMode = isDevMode(argv.mode);
     return merge(base, devMode ? dev : prod, {
         plugins: plugins(devMode),
     });
-}
+};
