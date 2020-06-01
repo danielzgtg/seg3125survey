@@ -1,10 +1,10 @@
 
 // noinspection JSUnusedGlobalSymbols
-export function unused() {
-    return "Hi";
+export function unused(): unknown {
+    return 'Hi';
 }
 
-export function *fib() {
+export function *fib(): Generator<number, void, void> {
     let a = 0;
     let b = 1;
     yield a;

@@ -1,10 +1,10 @@
 import { fib } from './helpers';
 
-function* fib10() {
-    let i: number = 0;
+function *fib10() {
+    let i = 0;
     for (const value of fib()) {
         yield value;
-        if (++i == 10) {
+        if (++i === 10) {
             return;
         }
     }
@@ -16,4 +16,4 @@ describe('fib', () => {
         const expected: number[] = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34];
         expect(actual).toStrictEqual(expected);
     });
-})
+});

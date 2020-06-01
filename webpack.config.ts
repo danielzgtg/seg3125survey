@@ -1,27 +1,27 @@
-import path from "path";
+
+import path from 'path';
 import webpack from 'webpack';
-import WebpackManifestPlugin from 'webpack-manifest-plugin';
+// eslint-disable-next-line sort-imports
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import CopyWebpackPlugin from "copy-webpack-plugin";
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import TerserJSPlugin from 'terser-webpack-plugin';
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import merge from 'webpack-merge';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import TerserJSPlugin from 'terser-webpack-plugin';
+import WebpackManifestPlugin from 'webpack-manifest-plugin';
 
 const openPath = 'seg3125survey/';
-const publicPath = '/' + openPath;
-const distPath = path.resolve(__dirname, 'dist' + publicPath);
-// noinspection ES6ConvertVarToLetConst,JSUnusedLocalSymbols
-var query = {};
+const publicPath = `/${openPath}`;
+const distPath = path.resolve(__dirname, `dist${publicPath}`);
 
 function plugins(devMode: boolean): NonNullable<webpack.Configuration['plugins']> {
     return [
-        new webpack.ProgressPlugin(),
+        new webpack.ProgressPlugin,
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false,
         }),
-        new WebpackManifestPlugin(),
+        new WebpackManifestPlugin,
         new MiniCssExtractPlugin({
             filename: 'styles/[name].[contentHash].css',
         }),
@@ -63,7 +63,7 @@ const base: webpack.Configuration = {
             warnings: true,
             errors: true,
         },
-        publicPath: publicPath,
+        publicPath,
         serveIndex: false,
     },
     module: {
@@ -128,7 +128,16 @@ const base: webpack.Configuration = {
                         options: {
                             configFile: 'tsconfig.app.json',
                         },
-                    }
+                    },
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            emitError: true,
+                            emitWarning: true,
+                            failOnError: true,
+                            failOnWarning: true,
+                        },
+                    },
                 ],
                 exclude: /node_modules/,
             },
@@ -143,12 +152,12 @@ const base: webpack.Configuration = {
     output: {
         filename: '[name].[contentHash].js',
         path: distPath,
-        publicPath: publicPath,
+        publicPath,
     },
     optimization: {
         minimizer: [
-            new TerserJSPlugin(),
-            new OptimizeCSSAssetsPlugin(),
+            new TerserJSPlugin,
+            new OptimizeCSSAssetsPlugin,
         ],
         moduleIds: 'hashed',
         noEmitOnErrors: true,
@@ -163,7 +172,7 @@ const base: webpack.Configuration = {
                 },
             },
         },
-        runtimeChunk: "single",
+        runtimeChunk: 'single',
         usedExports: true,
         sideEffects: true,
     },
@@ -185,18 +194,18 @@ const prod: webpack.Configuration = {
 
 function isDevMode(mode: string | undefined): boolean {
     switch (mode) {
-        case "development":
-            return true;
-        case "production":
-            return false;
+    case 'development':
+        return true;
+    case 'production':
+        return false;
     }
-    throw TypeError("Unknown mode");
+    throw new TypeError('Unknown mode');
 }
 
 // noinspection JSUnusedGlobalSymbols
-export default function (env: unknown, argv: { mode: string }): webpack.Configuration {
+export default function(env: unknown, argv: { mode: string }): webpack.Configuration {
     const devMode = isDevMode(argv.mode);
     return merge(base, devMode ? dev : prod, {
         plugins: plugins(devMode),
     });
-};
+}
