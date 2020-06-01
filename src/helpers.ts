@@ -7,6 +7,8 @@ export function unused() {
 export function *fib() {
     let a = 0;
     let b = 1;
+    yield a;
+    yield b;
     while (true) {
         const c = a + b;
         a = b;
