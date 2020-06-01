@@ -2,21 +2,21 @@ $responsive-width: 1500px;
 
 @font-face {
     font-family: "Noto Sans";
-    src: url("./NotoSans-Regular.ttf") format("ttf");
+    src: url("../res/noto/NotoSans-Regular.ttf") format("ttf");
     font-style: normal;
     font-weight: normal;
 }
 
 @font-face {
     font-family: "Noto Sans";
-    src: url("./NotoSans-Bold.ttf") format("ttf");
+    src: url("../res/noto/NotoSans-Bold.ttf") format("ttf");
     font-style: normal;
     font-weight: bold;
 }
 
 @font-face {
     font-family: "Noto Color Emoji";
-    src: url("./NotoColorEmoji.ttf") format("ttf");
+    src: url("../res/noto/NotoColorEmoji.ttf") format("ttf");
 }
 
 //noinspection CssNoGenericFontName
@@ -106,7 +106,7 @@ article {
 
 body {
     background: darkgrey url(
-    "md-mahdi-oo0oX_3oznI-unsplash.jpg"
+    "../res/unsplash/md-mahdi-oo0oX_3oznI-unsplash.jpg"
     ) center / cover fixed;
 }
 
@@ -468,10 +468,10 @@ main, body {
     }
 }
 
-$scenes: url("./en.wikipedia.org_wiki_Main_Page.png"),
-    url("./en.wikipedia.org_wiki_Talk_User_interface.png"),
-    url("./editold.png"),
-    url("./editnew.png");
+$scenes: url("../res/wikipedia/en.wikipedia.org_wiki_Main_Page.png"),
+    url("../res/wikipedia/en.wikipedia.org_wiki_Talk_User_interface.png"),
+    url("../res/wikipedia/editold.png"),
+    url("../res/wikipedia/editnew.png");
 
 
 @for $i from 1 through length($scenes) {
