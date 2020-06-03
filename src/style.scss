@@ -2,21 +2,21 @@ $responsive-width: 1500px;
 
 @font-face {
     font-family: "Noto Sans";
-    src: url("../res/noto/NotoSans-Regular.ttf") format("ttf");
+    src: url("../res/noto/NotoSans-Regular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
 }
 
 @font-face {
     font-family: "Noto Sans";
-    src: url("../res/noto/NotoSans-Bold.ttf") format("ttf");
+    src: url("../res/noto/NotoSans-Bold.ttf") format("truetype");
     font-style: normal;
     font-weight: bold;
 }
 
 @font-face {
     font-family: "Noto Color Emoji";
-    src: url("../res/noto/NotoColorEmoji.ttf") format("ttf");
+    src: url("../res/noto/NotoColorEmoji.ttf") format("truetype");
 }
 
 //noinspection CssNoGenericFontName

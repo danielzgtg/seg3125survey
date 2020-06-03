@@ -54,6 +54,7 @@ function plugins(devMode: boolean): NonNullable<webpack.Configuration['plugins']
 const base: webpack.Configuration = {
     entry: {
         polyfills: './src/polyfills.ts',
+        'css-normalize': './src/css-normalize.ts',
         main: './src/index.ts',
     },
     devServer: {
@@ -175,6 +176,16 @@ const base: webpack.Configuration = {
         runtimeChunk: 'single',
         usedExports: true,
         sideEffects: true,
+        flagIncludedChunks: true,
+        occurrenceOrder: true,
+        removeAvailableModules: true,
+        removeEmptyChunks: true,
+    },
+    performance: {
+        hints: 'warning',
+        assetFilter(assetFilename: string): boolean {
+            return /.js$/.test(assetFilename) && !/(polyfills|vendors)/.test(assetFilename);
+        },
     },
 };
 
@@ -182,7 +193,6 @@ const dev: webpack.Configuration = {
     devtool: 'source-map',
     optimization: {
         minimize: false,
-        removeEmptyChunks: false,
     },
 };
 
